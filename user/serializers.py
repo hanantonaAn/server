@@ -1,10 +1,5 @@
 from rest_framework import serializers
-from user.models import *
-
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = "__all__" 
+from user.models import * 
 
 class UserDataSerializer(serializers.ModelSerializer):
     user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
@@ -23,4 +18,35 @@ class UserExperienceSerializer(serializers.ModelSerializer):
     user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = UserExperience
-        fields = "__all__"                        
+        fields = "__all__"    
+
+class PortfolioSerializer(serializers.ModelSerializer):
+    user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    class Meta:
+        model = Portfolio
+        fields = "__all__"   
+
+class LinkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Link
+        fields = "__all__"       
+
+class TextFieldSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TextField
+        fields = "__all__" 
+
+class ListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = List
+        fields = "__all__" 
+
+class PhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Photo
+        fields = "__all__" 
+
+class SliderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Slider
+        fields = "__all__" 

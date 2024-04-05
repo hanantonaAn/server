@@ -75,3 +75,141 @@ class UserExperience(models.Model):
 
     def __str__(self):
         return str(self.user_id)
+    
+class Portfolio(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    public = models.BooleanField(default=True)
+    heading_ids = models.ManyToManyField('user.Heading', related_name='porfolio_headings', null=True, blank=True)
+    link_ids = models.ManyToManyField('user.Link', related_name='porfolio_links', null=True, blank=True)
+    textfield_ids = models.ManyToManyField('user.TextField', related_name='porfolio_textfields', null=True, blank=True)
+    list_ids = models.ManyToManyField('user.List', related_name='porfolio_lists', null=True, blank=True)
+    photo_ids = models.ManyToManyField('user.Photo', related_name='porfolio_photos', null=True, blank=True)
+    slider_ids = models.ManyToManyField('user.Slider', related_name='porfolio_sliders', null=True, blank=True)
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.user_id)
+
+
+class Heading(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    value = models.TextField()
+    font = models.CharField()
+    size = models.FloatField()
+    color = models.CharField()
+    coordinate_x = models.FloatField()
+    coordinate_y = models.FloatField()
+    coordinate_z = models.IntegerField()
+    transparency = models.FloatField()
+    italics = models.BooleanField(default=False)
+    bold = models.BooleanField(default=True)
+    underlining = models.BooleanField(default=False)
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.value
+
+class Link(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    value = models.TextField()
+    font = models.CharField()
+    size = models.FloatField()
+    color = models.CharField()
+    coordinate_x = models.FloatField()
+    coordinate_y = models.FloatField()
+    coordinate_z = models.IntegerField()
+    transparency = models.FloatField()
+    italics = models.BooleanField(default=True)
+    bold = models.BooleanField(default=False)
+    underlining = models.BooleanField(default=True) 
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.value
+
+class TextField(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    value = models.TextField()
+    font = models.CharField()
+    size = models.FloatField()
+    color = models.CharField()
+    coordinate_x = models.FloatField()
+    coordinate_y = models.FloatField()
+    coordinate_z = models.IntegerField()
+    transparency = models.FloatField()
+    italics = models.BooleanField(default=False)
+    bold = models.BooleanField(default=True)
+    underlining = models.BooleanField(default=False) 
+    height = models.IntegerField()
+    width = models.IntegerField()
+    border = models.BooleanField(default=False)
+    border_color = models.CharField(null=True, blank=True) 
+    border_transparency = models.FloatField(null=True, blank=True)   
+    border_radius = models.FloatField(null=True, blank=True)
+    border_width = models.FloatField(null=True, blank=True) 
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.value
+
+
+class List(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    value = models.TextField()
+    font = models.CharField()
+    size = models.FloatField()
+    color = models.CharField()
+    coordinate_x = models.FloatField()
+    coordinate_y = models.FloatField()
+    coordinate_z = models.IntegerField()
+    transparency = models.FloatField()
+    italics = models.BooleanField(default=True)
+    bold = models.BooleanField(default=False)
+    underlining = models.BooleanField(default=True)  
+    list_values = ArrayField(models.TextField(blank=True), null=True, )
+    font_list = models.CharField()
+    size_list = models.FloatField()
+    color_list = models.CharField()
+    transparency_list = models.FloatField()
+    italics_list = models.BooleanField(default=True)
+    bold_list = models.BooleanField(default=False)
+    underlining_list = models.BooleanField(default=True) 
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True) 
+
+    def __str__(self):
+        return self.value
+
+
+class Photo(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    coordinate_x = models.FloatField()
+    coordinate_y = models.FloatField()
+    coordinate_z = models.IntegerField()
+    height = models.IntegerField()
+    width = models.IntegerField() 
+    picture = models.ImageField(upload_to='portfolio_photo/', null=True, blank=True)
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.id)
+
+class Slider(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    coordinate_x = models.FloatField()
+    coordinate_y = models.FloatField()
+    coordinate_z = models.IntegerField()
+    height = models.IntegerField()
+    width = models.IntegerField()
+    pictures =  ArrayField(models.ImageField(upload_to='portfolio_slider/', null=True, blank=True), null=True, blank=True)
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.id)    

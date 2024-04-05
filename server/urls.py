@@ -14,6 +14,14 @@ router.register(r'userdata', UserDataViewSet)
 router.register(r'userskills', UserSkillsViewSet)
 router.register(r'userdata', UserExperienceViewSet)
 
+router.register(r'portfolio', PortfolioViewSet)
+router.register(r'textfield', TextFieldViewSet)
+router.register(r'link', LinkViewSet)
+router.register(r'list', ListViewSet)
+router.register(r'photo', PhotoViewSet)
+router.register(r'slider', SliderViewSet)
+
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
