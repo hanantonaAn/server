@@ -24,7 +24,13 @@ class PortfolioSerializer(serializers.ModelSerializer):
     user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Portfolio
-        fields = "__all__"   
+        fields = "__all__"  
+
+class PortfolioByUserIdSerializer(serializers.ModelSerializer):
+    user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    class Meta:
+        model = Portfolio
+        fields = "__all__"          
 
 class LinkSerializer(serializers.ModelSerializer):
     class Meta:

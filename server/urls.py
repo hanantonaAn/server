@@ -12,7 +12,7 @@ router = routers.SimpleRouter()
 # http://127.0.0.1:8000/api/userdata/
 router.register(r'userdata', UserDataViewSet)
 router.register(r'userskills', UserSkillsViewSet)
-router.register(r'userdata', UserExperienceViewSet)
+router.register(r'userexperience', UserExperienceViewSet)
 
 router.register(r'portfolio', PortfolioViewSet)
 router.register(r'textfield', TextFieldViewSet)
@@ -21,9 +21,12 @@ router.register(r'list', ListViewSet)
 router.register(r'photo', PhotoViewSet)
 router.register(r'slider', SliderViewSet)
 
+router.register(r'portfoliobyuser', PortfolioGetByUserIdViewSet, basename='portfoliobyuser')
+router.register(r'userdatabyuser', UserDataByUserIdViewSet, basename='userdatabyuser')
+router.register(r'userskillsbyuser', UserSkillsByUserIdViewSet, basename='userskillsbyuser')
+router.register(r'userexperiencebyuser', UserExperienceViewSet, basename='experiencebyuser')
 
-
-urlpatterns = [
+urlpatterns = [ 
     path("admin/", admin.site.urls),
     path('api/', include(router.urls)),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
