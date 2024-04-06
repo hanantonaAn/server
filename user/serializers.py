@@ -56,3 +56,13 @@ class SliderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Slider
         fields = "__all__" 
+
+class SphereSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sphere
+        fields = "__all__" 
+
+class HashtagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hashtag
+        fields = "__all__"                 

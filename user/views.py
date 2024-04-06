@@ -66,4 +66,11 @@ class PhotoViewSet(viewsets.ModelViewSet):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer  
   
+class SphereViewSet(viewsets.ModelViewSet):
+    queryset = Sphere.objects.all()
+    serializer_class = SphereSerializer  
+
+class HashtagViewSet(viewsets.ModelViewSet):
+    queryset = Hashtag.objects.all()
+    serializer_class = HashtagSerializer    
     
