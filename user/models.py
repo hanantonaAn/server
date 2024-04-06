@@ -75,25 +75,7 @@ class UserExperience(models.Model):
 
     def __str__(self):
         return str(self.user_id)
-    
-class Portfolio(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
-    sphere_id = models.ForeignKey('Sphere', on_delete=models.CASCADE)
-    public = models.BooleanField(default=True)
-    heading_ids = models.ManyToManyField('user.Heading', related_name='porfolio_headings', null=True, blank=True)
-    link_ids = models.ManyToManyField('user.Link', related_name='porfolio_links', null=True, blank=True)
-    textfield_ids = models.ManyToManyField('user.TextField', related_name='porfolio_textfields', null=True, blank=True)
-    list_ids = models.ManyToManyField('user.List', related_name='porfolio_lists', null=True, blank=True)
-    photo_ids = models.ManyToManyField('user.Photo', related_name='porfolio_photos', null=True, blank=True)
-    slider_ids = models.ManyToManyField('user.Slider', related_name='porfolio_sliders', null=True, blank=True)
-    hashtag_ids = models.ManyToManyField('user.Hachtag', related_name='porfolio_hashtags', null=True, blank=True)
-    time_create = models.DateTimeField(auto_now_add=True)
-    time_update = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return str(self.user_id)
-    
 class Sphere(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     sphere = models.CharField(max_length=50)
@@ -108,6 +90,25 @@ class Hashtag(models.Model):
     def __str__(self):
         return self.hashtag
 
+
+class Portfolio(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    sphere_id = models.ForeignKey('Sphere', on_delete=models.CASCADE, null=True, blank=True)
+    public = models.BooleanField(default=True)
+    heading_ids = models.ManyToManyField('user.Heading', related_name='porfolio_headings', null=True, blank=True)
+    link_ids = models.ManyToManyField('user.Link', related_name='porfolio_links', null=True, blank=True)
+    textfield_ids = models.ManyToManyField('user.TextField', related_name='porfolio_textfields', null=True, blank=True)
+    list_ids = models.ManyToManyField('user.List', related_name='porfolio_lists', null=True, blank=True)
+    photo_ids = models.ManyToManyField('user.Photo', related_name='porfolio_photos', null=True, blank=True)
+    slider_ids = models.ManyToManyField('user.Slider', related_name='porfolio_sliders', null=True, blank=True)
+    hashtag_ids = models.ManyToManyField('user.Hashtag', related_name='porfolio_hashtags', null=True, blank=True)
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.user_id)
+    
 
 class Heading(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
