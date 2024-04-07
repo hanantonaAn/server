@@ -7,3 +7,9 @@ drf-spectacular==0.27.2
 psycopg==3.1.18
 psycopg2==2.9.9
 Pillow==10.0.1
+pymorphy2==0.9.1
+pymorphy2-dicts-ru==2.4.417127.4579844
+pymorphy3==2.0.1
+pymorphy3-dicts-ru==2.4.417150.4580142
+yake @ git+https://github.com/LIAAD/yake@0fa58cceb465162b6bd0cab7ec967edeb907fbcc
+confection==0.1.4
