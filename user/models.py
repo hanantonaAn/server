@@ -46,6 +46,7 @@ class UserData(models.Model):
     date_of_birth = models.DateField(null=True, blank=True)
     sex = models.TextField(null=True, blank=True)
     graduation_place = models.TextField(null=True, blank=True)
+    education_level = models.CharField(null=True, blank=True)
     graduation_date = models.DateField(null=True, blank=True)
     languages = ArrayField(models.CharField(max_length=20, blank=True), null=True, blank=True)
     curses = ArrayField(models.TextField(blank=True), null=True, blank=True)
@@ -69,6 +70,7 @@ class UserSkills(models.Model):
 class UserExperience(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    experience_years = models.CharField(null=True, blank=True)
     experience = ArrayField(models.TextField(blank=True), null=True, )
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
@@ -93,6 +95,8 @@ class Hashtag(models.Model):
 
 class Portfolio(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    portfolio_html=models.TextField(null=True, blank=True)
+    portfolio_text=models.TextField(null=True, blank=True)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
     sphere_id = models.ForeignKey('Sphere', on_delete=models.CASCADE, null=True, blank=True)
     public = models.BooleanField(default=True)
