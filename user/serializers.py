@@ -8,6 +8,11 @@ class UserDataSerializer(serializers.ModelSerializer):
         model = UserData
         fields = "__all__" 
 
+class UsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"        
+
 class UserSkillsSerializer(serializers.ModelSerializer):
     user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:

@@ -11,6 +11,8 @@ router = routers.SimpleRouter()
 
 # http://127.0.0.1:8000/api/userdata/
 router.register(r'userdata', UserDataViewSet)
+
+router.register(r'users', UsersViewSet)
 router.register(r'userskills', UserSkillsViewSet)
 router.register(r'userexperience', UserExperienceViewSet)
 
@@ -31,6 +33,7 @@ router.register(r'userexperiencebyuser', UserExperienceViewSet, basename='experi
 urlpatterns = [ 
     path("admin/", admin.site.urls),
     path('', include(router.urls)),
+    path('users_by_username/<str:username>/', UsersViewSet.as_view({'get': 'list'}), name='user-detail'),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'), 
     path('auth/', include('djoser.urls')),

@@ -10,7 +10,14 @@ from user.serializers import *
 class UserDataViewSet(viewsets.ModelViewSet):
     queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
-    permission_classes = (IsOwnerOrReadOnly,  )
+    # permission_classes = (IsOwnerOrReadOnly,  )
+
+class UsersViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UsersSerializer
+    def get_queryset(self):
+        username = self.kwargs['username']
+        return User.objects.filter(username=username)    
 
 class UserDataByUserIdViewSet(viewsets.ModelViewSet):
     serializer_class = UserDataSerializer
