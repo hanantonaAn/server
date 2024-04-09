@@ -49,7 +49,7 @@ class UserData(models.Model):
     education_level = models.CharField(null=True, blank=True)
     graduation_date = models.DateField(null=True, blank=True)
     languages = ArrayField(models.CharField(blank=True), null=True, blank=True)
-    curses = ArrayField(models.TextField(blank=True), null=True, blank=True)
+    curses = ArrayField(models.CharField(blank=True), null=True, blank=True)
     picture = models.ImageField(upload_to='profile_photo/', null=True, blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
@@ -60,7 +60,7 @@ class UserData(models.Model):
 class UserSkills(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
-    skills = ArrayField(models.TextField(blank=True), null=True, blank=True)
+    skills = ArrayField(models.CharField(blank=True), null=True, blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
 
@@ -71,7 +71,7 @@ class UserExperience(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
     experience_years = models.CharField(null=True, blank=True)
-    experience = ArrayField(models.TextField(blank=True), null=True, )
+    experience = ArrayField(models.CharField(blank=True), null=True, )
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
 

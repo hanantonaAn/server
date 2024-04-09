@@ -14,7 +14,7 @@ class UserDataSerializer(serializers.ModelSerializer):
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'email']   
+        fields = ['id', 'username', 'email']   
 
 class UsersSkillsSerializer(serializers.ModelSerializer):
     skills = serializers.ListField(child=serializers.CharField())
