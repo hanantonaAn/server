@@ -48,7 +48,7 @@ class UserData(models.Model):
     graduation_place = models.TextField(null=True, blank=True)
     education_level = models.CharField(null=True, blank=True)
     graduation_date = models.DateField(null=True, blank=True)
-    languages = ArrayField(models.CharField(max_length=20, blank=True), null=True, blank=True)
+    languages = ArrayField(models.CharField(blank=True), null=True, blank=True)
     curses = ArrayField(models.TextField(blank=True), null=True, blank=True)
     picture = models.ImageField(upload_to='profile_photo/', null=True, blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
