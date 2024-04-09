@@ -28,7 +28,7 @@ router.register(r'hashtag', HashtagViewSet)
 router.register(r'portfoliobyuser', PortfolioGetByUserIdViewSet, basename='portfoliobyuser')
 router.register(r'userdatabyuser', UserDataByUserIdViewSet, basename='userdatabyuser')
 router.register(r'userskillsbyuser', UserSkillsByUserIdViewSet, basename='userskillsbyuser')
-router.register(r'userexperiencebyuser', UserExperienceViewSet, basename='experiencebyuser')
+router.register(r'userexperiencebyuser', UserSkillsByUserIdViewSet, basename='experiencebyuser')
 
 urlpatterns = [ 
     path("admin/", admin.site.urls),
