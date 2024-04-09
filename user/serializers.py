@@ -11,8 +11,22 @@ class UserDataSerializer(serializers.ModelSerializer):
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"        
+        fields = ['username', 'email']   
 
+class UsersSkillsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserSkills
+        fields = "__all__" 
+
+class UsersExpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserExperience
+        fields = "__all__" 
+
+class UsersPortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Portfolio
+        fields = "__all__"         
 class UserSkillsSerializer(serializers.ModelSerializer):
     user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:

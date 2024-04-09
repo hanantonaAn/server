@@ -28,17 +28,20 @@ class UserInfoViewSet(viewsets.ModelViewSet):
         user_data = UserData.objects.filter(user_id=user.id).first()
         user_skills = UserSkills.objects.filter(user_id=user.id).first()
         user_exp = UserExperience.objects.filter(user_id=user.id).first()
+        user_portfolio = Portfolio.objects.filter(user_id=user.id).first()
 
         user_serializer = UsersSerializer(user)
         user_data_serializer = UserDataSerializer(user_data) if user_data else None
-        user_skills_serializer = UserSkillsSerializer(user_skills) if user_skills else None
-        user_exp_serializer = UserExperienceSerializer(user_exp) if user_exp else None
+        user_skills_serializer = UsersSkillsSerializer(user_skills) if user_skills else None
+        user_exp_serializer = UsersExpSerializer(user_exp) if user_exp else None
+        user_portfolio_serializer = UsersPortSerializer(user_portfolio) if user_portfolio else None
 
         data = {
             'user': user_serializer.data,
             'user_data': user_data_serializer.data if user_data_serializer else None,
             'user_skills': user_skills_serializer.data if user_skills_serializer else None,
             'user_experience': user_exp_serializer.data if user_exp_serializer else None,
+            'user_portfolio': user_portfolio_serializer.data if user_portfolio_serializer else None,
         }
 
         return Response(data)
