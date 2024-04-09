@@ -18,6 +18,30 @@ class UsersViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         username = self.kwargs['username']
         return User.objects.filter(username=username)    
+    
+class UserInfoViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UsersSerializer
+
+    def list(self, request, username=None):
+        user = User.objects.filter(username=username).get()
+        user_data = UserData.objects.filter(user_id=user.id).first()
+        user_skills = UserSkills.objects.filter(user_id=user.id).first()
+        user_exp = UserExperience.objects.filter(user_id=user.id).first()
+
+        user_serializer = UsersSerializer(user)
+        user_data_serializer = UserDataSerializer(user_data) if user_data else None
+        user_skills_serializer = UserSkillsSerializer(user_skills) if user_skills else None
+        user_exp_serializer = UserExperienceSerializer(user_exp) if user_exp else None
+
+        data = {
+            'user': user_serializer.data,
+            'user_data': user_data_serializer.data if user_data_serializer else None,
+            'user_skills': user_skills_serializer.data if user_skills_serializer else None,
+            'user_experience': user_exp_serializer.data if user_exp_serializer else None,
+        }
+
+        return Response(data)
 
 class UserDataByUserIdViewSet(viewsets.ModelViewSet):
     serializer_class = UserDataSerializer
