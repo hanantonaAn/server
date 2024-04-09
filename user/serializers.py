@@ -3,6 +3,9 @@ from user.models import *
 
 class UserDataSerializer(serializers.ModelSerializer):
     user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    languages = serializers.ListField(child=serializers.CharField())
+    curses = serializers.ListField(child=serializers.CharField())
     
     class Meta:
         model = UserData
@@ -14,16 +17,21 @@ class UsersSerializer(serializers.ModelSerializer):
         fields = ['username', 'email']   
 
 class UsersSkillsSerializer(serializers.ModelSerializer):
+    skills = serializers.ListField(child=serializers.CharField())
     class Meta:
         model = UserSkills
         fields = "__all__" 
 
 class DataSerializer(serializers.ModelSerializer):
+    languages = serializers.ListField(child=serializers.CharField())
+    curses = serializers.ListField(child=serializers.CharField())
+
     class Meta:
         model = UserData
         fields = "__all__"         
 
 class UsersExpSerializer(serializers.ModelSerializer):
+    experience = serializers.ListField(child=serializers.CharField())
     class Meta:
         model = UserExperience
         fields = "__all__" 
@@ -34,12 +42,14 @@ class UsersPortSerializer(serializers.ModelSerializer):
         fields = "__all__"         
 class UserSkillsSerializer(serializers.ModelSerializer):
     user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    skills = serializers.ListField(child=serializers.CharField())
     class Meta:
         model = UserSkills
         fields = "__all__"   
 
 class UserExperienceSerializer(serializers.ModelSerializer):
     user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    experience = serializers.ListField(child=serializers.CharField())
     class Meta:
         model = UserExperience
         fields = "__all__"    
