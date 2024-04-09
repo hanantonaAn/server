@@ -51,6 +51,31 @@ class UserInfoViewSet(viewsets.ModelViewSet):
         }
 
         return Response(data)
+    
+class UserInfoAllViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UsersSerializer
+
+    def list(self, request):
+        users = User.objects.all()
+        user_data = UserData.objects.all()
+        user_skills = UserSkills.objects.all()
+        user_exp = UserExperience.objects.all()
+        user_portfolio = Portfolio.objects.all()
+
+        aggregated_data = []
+
+        for user in users:
+            user_info = {
+                'user': UsersSerializer(user).data,
+                'user_data': UserDataSerializer(user_data.filter(user_id=user.id), many=True).data,
+                'user_skills': UsersSkillsSerializer(user_skills.filter(user_id=user.id), many=True).data,
+                'user_experience': UsersExpSerializer(user_exp.filter(user_id=user.id), many=True).data,
+                'user_portfolio': UsersPortSerializer(user_portfolio.filter(user_id=user.id), many=True).data,
+            }
+            aggregated_data.append(user_info)
+
+        return Response(aggregated_data) 
 
 class UserDataByUserIdViewSet(viewsets.ModelViewSet):
     serializer_class = UserDataSerializer
