@@ -37,7 +37,7 @@ class UserInfoViewSet(viewsets.ModelViewSet):
         user_portfolio = Portfolio.objects.filter(user_id=user.id).first()
 
         user_serializer = UsersSerializer(user)
-        user_data_serializer = UserDataSerializer(user_data) if user_data else None
+        user_data_serializer = DataSerializer(user_data) if user_data else None
         user_skills_serializer = UsersSkillsSerializer(user_skills) if user_skills else None
         user_exp_serializer = UsersExpSerializer(user_exp) if user_exp else None
         user_portfolio_serializer = UsersPortSerializer(user_portfolio) if user_portfolio else None
@@ -68,7 +68,7 @@ class UserInfoAllViewSet(viewsets.ModelViewSet):
         for user in users:
             user_info = {
                 'user': UsersSerializer(user).data,
-                'user_data': UserDataSerializer(user_data.filter(user_id=user.id), many=True).data,
+                'user_data': DataSerializer(user_data.filter(user_id=user.id), many=True).data,
                 'user_skills': UsersSkillsSerializer(user_skills.filter(user_id=user.id), many=True).data,
                 'user_experience': UsersExpSerializer(user_exp.filter(user_id=user.id), many=True).data,
                 'user_portfolio': UsersPortSerializer(user_portfolio.filter(user_id=user.id), many=True).data,

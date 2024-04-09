@@ -18,6 +18,11 @@ class UsersSkillsSerializer(serializers.ModelSerializer):
         model = UserSkills
         fields = "__all__" 
 
+class DataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserData
+        fields = "__all__"         
+
 class UsersExpSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserExperience
