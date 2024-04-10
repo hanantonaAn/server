@@ -34,6 +34,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include(router.urls)),
     path('usersinfo/', UserInfoAllViewSet.as_view({'get': 'list'}), name='alluserinfo'),
+    path('public_usersinfo/', PublicUserInfoAllViewSet.as_view({'get': 'list'}), name='alluserinfo'),
     path('userinfo_username/<str:username>/', UserInfoViewSet.as_view({'get': 'list'}), name='userinfo'),
     path('users_by_username/<str:username>/', UsersViewSet.as_view({'get': 'list'}), name='user-detail'),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'), 
