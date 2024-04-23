@@ -4,8 +4,6 @@ import inspect
 from collections import namedtuple
 
 def SearchWords(text):
-
-
     if not hasattr(inspect, 'getargspec'):
         def getargspec(func):
             inspect_result = inspect.getfullargspec(func)

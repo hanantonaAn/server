@@ -6,7 +6,11 @@ from user.models import *
 from user.permissions import *
 from user.serializers import *
 
-
+class FetchVacanciesView(APIView):
+    def get(self, request):
+        fetch_and_save_vacancies()
+        return Response({"message": "Вакансии успешно получены и сохранены."})
+    
 class UserDataViewSet(viewsets.ModelViewSet):
     queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
@@ -165,3 +169,4 @@ class HashtagViewSet(viewsets.ModelViewSet):
     queryset = Hashtag.objects.all()
     serializer_class = HashtagSerializer    
     
+   

@@ -72,9 +72,32 @@ class UserExperience(models.Model):
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
     experience_years = models.CharField(null=True, blank=True)
     experience = ArrayField(models.CharField(blank=True), null=True, )
+    position = models.CharField(null=True, blank=True)
+    company = models.CharField(null=True, blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return str(self.user_id)
+    
+class UserVacancy(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)   
+    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    status = models.CharField(default = "NONE", null=True, blank=True)
+    hh_id = models.CharField(null=True, blank=True)
+    name = models.CharField( null=True, blank=True)
+    area = models.CharField(null=True, blank=True)
+    salary_from = models.CharField(null=True, blank=True)
+    salary_to = models.CharField(null=True, blank=True)
+    address = models.CharField(null=True, blank=True)
+    url = models.CharField(null=True, blank=True)
+    company = models.CharField(null=True, blank=True)
+    requirements = models.CharField(null=True, blank=True)
+    responsobility = models.CharField(null=True, blank=True)
+    scedule = models.CharField(null=True, blank=True)
+    role = models.CharField(null=True, blank=True)
+    experience = models.CharField(null=True, blank=True)
+    
     def __str__(self):
         return str(self.user_id)
 

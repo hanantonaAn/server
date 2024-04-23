@@ -32,6 +32,7 @@ router.register(r'userexperiencebyuser', UserExperienceByUserIdViewSet, basename
 
 urlpatterns = [ 
     path("admin/", admin.site.urls),
+    path('fetch_vacancies/', FetchVacanciesView.as_view(), name='fetch-vacancies'),
     path('', include(router.urls)),
     path('usersinfo/', UserInfoAllViewSet.as_view({'get': 'list'}), name='alluserinfo'),
     path('public_usersinfo/', PublicUserInfoAllViewSet.as_view({'get': 'list'}), name='alluserinfo'),

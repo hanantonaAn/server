@@ -1,9 +1,48 @@
 from rest_framework import serializers
 from user.models import * 
+import requests
+from django.db import transaction
+from .models import UserVacancy
+
+
+def fetch_and_save_vacancies():
+    url = "https://api.hh.ru/vacancies"
+    params = {
+        # "text": "HR-специалист", # Пример поискового запроса
+        "page": 0, # Страница результатов
+        "per_page": 20 # Количество вакансий на странице
+    }
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+    }
+
+    response = requests.get(url, params=params, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        vacancies = data.get('items', [])
+        with transaction.atomic():
+            for vacancy in vacancies:
+                UserVacancy.objects.create(
+                    user_id = serializers.HiddenField(default=serializers.CurrentUserDefault()),
+                    hh_id=vacancy['id'],
+                    name=vacancy['name'],
+                    area=vacancy['area']['name'],
+                    salary_from=str(vacancy['salary']['from']),
+                    salary_to=str(vacancy['salary']['to']),
+                    address=vacancy['address'],
+                    url=vacancy['url'],
+                    company=vacancy['employer']['name'],
+                    requirements=vacancy['snippet']['requirement'],
+                    responsobility=vacancy['snippet']['responsibility'],
+                    scedule=vacancy['schedule']['name'],
+                    role=vacancy['professional_roles'][0]['name'] if vacancy['professional_roles'] else None,
+                    experience=vacancy['experience']['name']
+                )
+    else:
+        print(f"Ошибка при запросе: {response.status_code}") 
 
 class UserDataSerializer(serializers.ModelSerializer):
     user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
     languages = serializers.ListField(child=serializers.CharField())
     curses = serializers.ListField(child=serializers.CharField())
     
