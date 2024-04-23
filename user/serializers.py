@@ -70,6 +70,7 @@ class DataSerializer(serializers.ModelSerializer):
         fields = "__all__"         
 
 class UsersExpSerializer(serializers.ModelSerializer):
+    user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = UserExperience
         fields = "__all__" 
