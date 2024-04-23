@@ -71,9 +71,9 @@ class UserExperience(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
     experience_years = models.CharField(null=True, blank=True)
-    experience = models.CharField(null=True, blank=True)
     position = models.CharField(null=True, blank=True)
     company = models.CharField(null=True, blank=True)
+    experience_info = models.CharField(null=True, blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
 

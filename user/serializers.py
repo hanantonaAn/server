@@ -70,7 +70,6 @@ class DataSerializer(serializers.ModelSerializer):
         fields = "__all__"         
 
 class UsersExpSerializer(serializers.ModelSerializer):
-    experience = serializers.ListField(child=serializers.CharField())
     class Meta:
         model = UserExperience
         fields = "__all__" 
@@ -88,7 +87,6 @@ class UserSkillsSerializer(serializers.ModelSerializer):
 
 class UserExperienceSerializer(serializers.ModelSerializer):
     user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    experience = serializers.ListField(child=serializers.CharField())
     class Meta:
         model = UserExperience
         fields = "__all__"    
