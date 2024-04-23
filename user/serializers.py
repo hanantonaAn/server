@@ -8,9 +8,9 @@ from .models import UserVacancy
 def fetch_and_save_vacancies():
     url = "https://api.hh.ru/vacancies"
     params = {
-        # "text": "HR-специалист", # Пример поискового запроса
-        "page": 0, # Страница результатов
-        "per_page": 20 # Количество вакансий на странице
+        # "text": 
+        "page": 0, 
+        "per_page": 20 
     }
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"

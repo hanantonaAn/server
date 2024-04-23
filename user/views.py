@@ -37,7 +37,7 @@ class UserInfoViewSet(viewsets.ModelViewSet):
         user = User.objects.filter(username=username).get()
         user_data = UserData.objects.filter(user_id=user.id).first()
         user_skills = UserSkills.objects.filter(user_id=user.id).first()
-        user_exp = UserExperience.objects.filter(user_id=user.id).first()
+        user_exp = UserExperience.objects.filter(user_id=user.id).all()
         user_portfolio = Portfolio.objects.filter(user_id=user.id).first()
 
         user_serializer = UsersSerializer(user)
