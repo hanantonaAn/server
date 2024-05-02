@@ -97,6 +97,7 @@ class UserVacancy(models.Model):
     scedule = models.CharField(null=True, blank=True)
     role = models.CharField(null=True, blank=True)
     experience = models.CharField(null=True, blank=True)
+    time_update = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return str(self.user_id)

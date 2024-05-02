@@ -24,6 +24,7 @@ router.register(r'photo', PhotoViewSet)
 router.register(r'slider', SliderViewSet)
 router.register(r'sphere', SphereViewSet)
 router.register(r'hashtag', HashtagViewSet)
+router.register(r'heading', HeadingViewSet)
 
 router.register(r'portfoliobyuser', PortfolioGetByUserIdViewSet, basename='portfoliobyuser')
 router.register(r'userdatabyuser', UserDataByUserIdViewSet, basename='userdatabyuser')

@@ -10,7 +10,7 @@ def fetch_and_save_vacancies():
     params = {
         # "text": 
         "page": 0, 
-        "per_page": 20 
+        "per_page": 2 
     }
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
@@ -70,10 +70,9 @@ class DataSerializer(serializers.ModelSerializer):
         fields = "__all__"         
 
 class UsersExpSerializer(serializers.ModelSerializer):
-    user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = UserExperience
-        fields = "__all__" 
+        fields = ['id', 'experience_years', 'position', 'company', 'experience_info', 'time_create', 'time_update']
 
 class UsersPortSerializer(serializers.ModelSerializer):
     class Meta:
@@ -123,6 +122,11 @@ class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
         fields = "__all__" 
+
+class HeadingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Heading
+        fields = "__all__"        
 
 class SliderSerializer(serializers.ModelSerializer):
     class Meta:

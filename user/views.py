@@ -28,7 +28,7 @@ class UsersViewSet(viewsets.ModelViewSet):
             return User.objects.filter(username=username)
         
         return User.objects.all()   
-    
+
 class UserInfoViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UsersSerializer
@@ -43,7 +43,10 @@ class UserInfoViewSet(viewsets.ModelViewSet):
         user_serializer = UsersSerializer(user)
         user_data_serializer = DataSerializer(user_data) if user_data else None
         user_skills_serializer = UsersSkillsSerializer(user_skills) if user_skills else None
-        user_exp_serializer = UsersExpSerializer(user_exp) if user_exp else None
+        
+        # Убедитесь, что user_exp_serializer возвращает список
+        user_exp_serializer = UsersExpSerializer(user_exp, many=True) if user_exp else None
+        
         user_portfolio_serializer = UsersPortSerializer(user_portfolio) if user_portfolio else None
 
         data = {
@@ -55,6 +58,7 @@ class UserInfoViewSet(viewsets.ModelViewSet):
         }
 
         return Response(data)
+
     
 class UserInfoAllViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -152,6 +156,10 @@ class LinkViewSet(viewsets.ModelViewSet):
 class ListViewSet(viewsets.ModelViewSet):
     queryset = List.objects.all()
     serializer_class = ListSerializer 
+
+class HeadingViewSet(viewsets.ModelViewSet):
+    queryset = Heading.objects.all()
+    serializer_class = HeadingSerializer
      
 class TextFieldViewSet(viewsets.ModelViewSet):
     queryset = TextField.objects.all()
