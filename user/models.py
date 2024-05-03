@@ -124,12 +124,12 @@ class Portfolio(models.Model):
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
     sphere_id = models.ForeignKey('Sphere', on_delete=models.CASCADE, null=True, blank=True)
     public = models.BooleanField(default=True)
-    heading_ids = models.ManyToManyField('user.Heading', related_name='porfolio_headings', null=True, blank=True)
-    link_ids = models.ManyToManyField('user.Link', related_name='porfolio_links', null=True, blank=True)
-    textfield_ids = models.ManyToManyField('user.TextField', related_name='porfolio_textfields', null=True, blank=True)
-    list_ids = models.ManyToManyField('user.List', related_name='porfolio_lists', null=True, blank=True)
-    photo_ids = models.ManyToManyField('user.Photo', related_name='porfolio_photos', null=True, blank=True)
-    slider_ids = models.ManyToManyField('user.Slider', related_name='porfolio_sliders', null=True, blank=True)
+    # heading_ids = models.ManyToManyField('user.Heading', related_name='porfolio_headings', null=True, blank=True)
+    # link_ids = models.ManyToManyField('user.Link', related_name='porfolio_links', null=True, blank=True)
+    # textfield_ids = models.ManyToManyField('user.TextField', related_name='porfolio_textfields', null=True, blank=True)
+    # list_ids = models.ManyToManyField('user.List', related_name='porfolio_lists', null=True, blank=True)
+    # photo_ids = models.ManyToManyField('user.Photo', related_name='porfolio_photos', null=True, blank=True)
+    # slider_ids = models.ManyToManyField('user.Slider', related_name='porfolio_sliders', null=True, blank=True)
     hashtag_ids = models.ManyToManyField('user.Hashtag', related_name='porfolio_hashtags', null=True, blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
@@ -178,6 +178,7 @@ class Link(models.Model):
 
 class TextField(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    portfolio_id = models.ForeignKey('Portfolio', on_delete=models.CASCADE, null=True)
     value = models.TextField(null=True, blank=True)
     text = models.TextField(null=True, blank=True)
     font = models.CharField(null=True, blank=True)
@@ -234,6 +235,7 @@ class List(models.Model):
 
 class Photo(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    portfolio_id = models.ForeignKey('Portfolio', on_delete=models.CASCADE, null=True)
     coordinate_x = models.FloatField()
     coordinate_y = models.FloatField()
     coordinate_z = models.IntegerField()
@@ -248,6 +250,7 @@ class Photo(models.Model):
 
 class Slider(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    portfolio_id = models.ForeignKey('Portfolio', on_delete=models.CASCADE, null=True)
     coordinate_x = models.FloatField()
     coordinate_y = models.FloatField()
     coordinate_z = models.IntegerField()

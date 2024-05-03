@@ -63,7 +63,6 @@ class UserInfoViewSet(viewsets.ModelViewSet):
         user_data_serializer = DataSerializer(user_data) if user_data else None
         user_skills_serializer = UsersSkillsSerializer(user_skills) if user_skills else None
         
-        # Убедитесь, что user_exp_serializer возвращает список
         user_exp_serializer = UsersExpSerializer(user_exp, many=True) if user_exp else None
         
         user_portfolio_serializer = UsersPortSerializer(user_portfolio) if user_portfolio else None
@@ -191,6 +190,38 @@ class PhotoViewSet(viewsets.ModelViewSet):
 class SliderImageViewSet(viewsets.ModelViewSet):
     queryset = SliderImage.objects.all()
     serializer_class = SliderImageSerializer  
+
+class AllPortfolioViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UsersSerializer
+
+    def list(self, request, username=None):
+        user = User.objects.filter(username=username).get()
+        port = Portfolio.objects.filter(user_id=user.id).first()
+        text = TextField.objects.filter(portfolio_id=port.id).all()
+        photo = Photo.objects.filter(portfolio_id=port.id).all()
+        slider = Slider.objects.filter(portfolio_id=port.id).all()
+        # slider_image = SliderImage.objects.filter(slider_id=slider.id).all()
+
+        user_serializer = UsersSerializer(user)
+        port_serializer = PortfolioSerializer(port) if port else None
+        text_serializer = TextFieldSerializer(text) if text else None
+        photo_serializer = PhotoSerializer(photo) if photo else None
+        slider_serializer = SliderSerializer(slider) if slider else None
+        # slider_image_serializer = SliderImageSerializer(slider_image) if slider_image else None
+        
+
+        data = {
+            'user': user_serializer.data,
+            'portfolio': port_serializer.data if port_serializer else None,
+            'text': text_serializer.data if text_serializer else None,
+            'photo': photo_serializer.data if photo_serializer else None,
+            'slider': slider_serializer.data if slider_serializer else None,
+            # 'slider_image': slider_image_serializer.data if slider_image_serializer else None,
+        }
+
+        return Response(data)
+
 
 class GetImagesBySliderRequest(APIView):
     serializer_class = SliderImageSerializer
