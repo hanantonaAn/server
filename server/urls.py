@@ -25,6 +25,8 @@ router.register(r'slider', SliderViewSet)
 router.register(r'sphere', SphereViewSet)
 router.register(r'hashtag', HashtagViewSet)
 router.register(r'heading', HeadingViewSet)
+router.register(r'vacancy', VacancyViewSet)
+router.register(r'slider-images', SliderImageViewSet)
 
 router.register(r'portfoliobyuser', PortfolioGetByUserIdViewSet, basename='portfoliobyuser')
 router.register(r'userdatabyuser', UserDataByUserIdViewSet, basename='userdatabyuser')
@@ -35,6 +37,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('fetch_vacancies/', FetchVacanciesView.as_view(), name='fetch-vacancies'),
     path('', include(router.urls)),
+    path('images_by_slider/', GetImagesBySliderRequest.as_view(), name='slider-images'),
     path('usersinfo/', UserInfoAllViewSet.as_view({'get': 'list'}), name='alluserinfo'),
     path('public_usersinfo/', PublicUserInfoAllViewSet.as_view({'get': 'list'}), name='alluserinfo'),
     path('userinfo_username/<str:username>/', UserInfoViewSet.as_view({'get': 'list'}), name='userinfo'),

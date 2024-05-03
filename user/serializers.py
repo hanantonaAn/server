@@ -3,14 +3,16 @@ from user.models import *
 import requests
 from django.db import transaction
 from .models import UserVacancy
+from rest_framework_simplejwt.tokens import AccessToken
 
 
-def fetch_and_save_vacancies():
+def fetch_and_save_vacancies(username):
     url = "https://api.hh.ru/vacancies"
     params = {
         # "text": 
         "page": 0, 
-        "per_page": 2 
+        "per_page": 1,
+        "area": "Йошкар-Ола",
     }
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
@@ -22,22 +24,23 @@ def fetch_and_save_vacancies():
         vacancies = data.get('items', [])
         with transaction.atomic():
             for vacancy in vacancies:
-                UserVacancy.objects.create(
-                    user_id = serializers.HiddenField(default=serializers.CurrentUserDefault()),
-                    hh_id=vacancy['id'],
-                    name=vacancy['name'],
-                    area=vacancy['area']['name'],
-                    salary_from=str(vacancy['salary']['from']),
-                    salary_to=str(vacancy['salary']['to']),
-                    address=vacancy['address'],
-                    url=vacancy['url'],
-                    company=vacancy['employer']['name'],
-                    requirements=vacancy['snippet']['requirement'],
-                    responsobility=vacancy['snippet']['responsibility'],
-                    scedule=vacancy['schedule']['name'],
-                    role=vacancy['professional_roles'][0]['name'] if vacancy['professional_roles'] else None,
-                    experience=vacancy['experience']['name']
-                )
+                if not UserVacancy.objects.filter(url=vacancy['url']).exists():
+                    UserVacancy.objects.create(
+                        username=username,
+                        hh_id=vacancy['id'],
+                        name=vacancy['name'],
+                        area=vacancy['area']['name'],
+                        salary_from=str(vacancy['salary']['from']),
+                        salary_to=str(vacancy['salary']['to']),
+                        address=vacancy['address'],
+                        url=vacancy['url'],
+                        company=vacancy['employer']['name'],
+                        requirements=vacancy['snippet']['requirement'],
+                        responsobility=vacancy['snippet']['responsibility'],
+                        scedule=vacancy['schedule']['name'],
+                        role=vacancy['professional_roles'][0]['name'] if vacancy['professional_roles'] else None,
+                        experience=vacancy['experience']['name']
+                    )
     else:
         print(f"Ошибка при запросе: {response.status_code}") 
 
@@ -106,7 +109,12 @@ class PortfolioByUserIdSerializer(serializers.ModelSerializer):
 class LinkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Link
-        fields = "__all__"       
+        fields = "__all__"    
+
+class VacancySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserVacancy
+        fields = "__all__"  
 
 class TextFieldSerializer(serializers.ModelSerializer):
     class Meta:
@@ -132,6 +140,11 @@ class SliderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Slider
         fields = "__all__" 
+
+class SliderImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SliderImage
+        fields = "__all__"         
 
 class SphereSerializer(serializers.ModelSerializer):
     class Meta:

@@ -8,9 +8,28 @@ from user.serializers import *
 
 class FetchVacanciesView(APIView):
     def get(self, request):
-        fetch_and_save_vacancies()
+        username = self.request.query_params.get('username', None)
+        if username is None:
+            return Response({"error": "Username parameter is required."}, status=400)
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return Response({"error": "User not found."}, status=404)
+        
+        fetch_and_save_vacancies(username)
+        
         return Response({"message": "Вакансии успешно получены и сохранены."})
-    
+
+class VacancyViewSet(viewsets.ModelViewSet):
+    queryset = UserVacancy.objects.all()
+    serializer_class = VacancySerializer  
+    permission_classes = (IsOwnerOrReadOnly, )
+
+    # def get_queryset(self):
+    #     username = self.request.query_params.get('username', None)
+    #     if username is not None:
+    #         return UserVacancy.objects.filter(user__username=username)
+
 class UserDataViewSet(viewsets.ModelViewSet):
     queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
@@ -168,6 +187,28 @@ class TextFieldViewSet(viewsets.ModelViewSet):
 class PhotoViewSet(viewsets.ModelViewSet):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer  
+
+class SliderImageViewSet(viewsets.ModelViewSet):
+    queryset = SliderImage.objects.all()
+    serializer_class = SliderImageSerializer  
+
+class GetImagesBySliderRequest(APIView):
+    serializer_class = SliderImageSerializer
+
+    def get(self, request):
+        slider_id = request.query_params.get('slider_id', None)
+        if slider_id is None:
+            return Response({"error": "Slider id parameter is required."}, status=400)
+        
+        try:
+            slider = Slider.objects.get(id=slider_id)
+        except Slider.DoesNotExist:
+            return Response({"error": "Slider not found."}, status=404)
+        
+        images = SliderImage.objects.filter(slider_id=slider)
+        serializer = SliderImageSerializer(images, many=True)  
+        
+        return Response(serializer.data)
   
 class SphereViewSet(viewsets.ModelViewSet):
     queryset = Sphere.objects.all()

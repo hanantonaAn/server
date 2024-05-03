@@ -82,7 +82,7 @@ class UserExperience(models.Model):
     
 class UserVacancy(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)   
-    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    username  = models.CharField(null=True, blank=True)
     status = models.CharField(default = "NONE", null=True, blank=True)
     hh_id = models.CharField(null=True, blank=True)
     name = models.CharField( null=True, blank=True)
@@ -178,19 +178,20 @@ class Link(models.Model):
 
 class TextField(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    value = models.TextField()
-    font = models.CharField()
-    size = models.FloatField()
-    color = models.CharField()
-    coordinate_x = models.FloatField()
-    coordinate_y = models.FloatField()
-    coordinate_z = models.IntegerField()
-    transparency = models.FloatField()
+    value = models.TextField(null=True, blank=True)
+    text = models.TextField(null=True, blank=True)
+    font = models.CharField(null=True, blank=True)
+    size = models.FloatField(null=True, blank=True)
+    color = models.CharField(null=True, blank=True)
+    coordinate_x = models.FloatField(null=True, blank=True)
+    coordinate_y = models.FloatField(null=True, blank=True)
+    coordinate_z = models.IntegerField(null=True, blank=True)
+    transparency = models.FloatField(null=True, blank=True)
     italics = models.BooleanField(default=False)
     bold = models.BooleanField(default=True)
     underlining = models.BooleanField(default=False) 
-    height = models.IntegerField()
-    width = models.IntegerField()
+    height = models.IntegerField(null=True, blank=True)
+    width = models.IntegerField(null=True, blank=True)
     border = models.BooleanField(default=False)
     border_color = models.CharField(null=True, blank=True) 
     border_transparency = models.FloatField(null=True, blank=True)   
@@ -252,9 +253,17 @@ class Slider(models.Model):
     coordinate_z = models.IntegerField()
     height = models.IntegerField()
     width = models.IntegerField()
-    pictures =  ArrayField(models.ImageField(upload_to='portfolio_slider/', null=True, blank=True), null=True, blank=True)
+    # pictures =  ArrayField(models.ImageField(upload_to='portfolio_slider/', null=True, blank=True), null=True, blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.id)    
+    
+class SliderImage(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    slider_id = models.ForeignKey(Slider, on_delete=models.CASCADE, related_name='pictures')
+    image = models.ImageField(upload_to='portfolio_slider/')   
+
+    def __str__(self):
+        return str(self.id) 
