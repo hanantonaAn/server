@@ -205,10 +205,10 @@ class AllPortfolioViewSet(viewsets.ModelViewSet):
 
         user_serializer = UsersSerializer(user)
         port_serializer = PortfolioSerializer(port) if port else None
-        text_serializer = TextFieldSerializer(text) if text else None
-        photo_serializer = PhotoSerializer(photo) if photo else None
-        slider_serializer = SliderSerializer(slider) if slider else None
-        # slider_image_serializer = SliderImageSerializer(slider_image) if slider_image else None
+        text_serializer = TextFieldSerializer(text, many=True) if text else None
+        photo_serializer = PhotoSerializer(photo, many=True) if photo else None
+        slider_serializer = SliderSerializer(slider, many=True) if slider else None
+        # slider_image_serializer = SliderImageSerializer(slider_image,  many=True) if slider_image else None
         
 
         data = {
