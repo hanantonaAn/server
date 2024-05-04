@@ -25,11 +25,13 @@ def fetch_and_save_vacancies(username):
     if Portfolio.objects.filter(user_id=user.id).exists():
         port = Portfolio.objects.filter(user_id=user.id).first()
         text = port.portfolio_text
+        key = SearchWords(text)
     else:
         text = ""    
-    key = SearchWords(text)
+        key = ""
     data = [position, city, key]
     result = ' '.join(data)
+    print(result)
 
     params = {
         "page": 0, 
