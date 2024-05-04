@@ -139,7 +139,7 @@ class Hashtag(models.Model):
 class Portfolio(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     portfolio_html=models.TextField(null=True, blank=True)
-    portfolio_text=models.TextField(null=True, blank=True)
+    portfolio_text=models.TextField(default="")
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
     sphere_id = models.ForeignKey('Sphere', on_delete=models.CASCADE, null=True, blank=True)
     public = models.BooleanField(default=True)
