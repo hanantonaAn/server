@@ -34,7 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class UserData(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
-    position = models.TextField(null=True, blank=True)
+    position = models.TextField(default="Разработчик")
     status = models.TextField(null=True, blank=True)
     additional_info = models.TextField(null=True, blank=True)
     fullname = models.TextField(null=True, blank=True)
@@ -43,7 +43,7 @@ class UserData(models.Model):
     phone_number = models.TextField(null=True, blank=True)
     contact_telegram = models.TextField(null=True, blank=True)
     contact_email = models.TextField(null=True, blank=True)
-    city = models.TextField(null=True, blank=True)
+    city = models.TextField(default="Москва")
     date_of_birth = models.DateField(null=True, blank=True)
     sex = models.TextField(null=True, blank=True)
     graduation_place = models.TextField(null=True, blank=True)
@@ -83,7 +83,7 @@ class UserSkills(models.Model):
 class UserExperience(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
-    experience_years = models.CharField(null=True, blank=True)
+    experience_years = models.CharField(default="between1And3")
     position = models.CharField(null=True, blank=True)
     company = models.CharField(null=True, blank=True)
     experience_info = models.CharField(null=True, blank=True)

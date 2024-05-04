@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from user.models import *
 from user.permissions import *
 from user.serializers import *
+from rest_framework.decorators import action
 
 class FetchVacanciesView(APIView):
     def get(self, request):
@@ -29,6 +30,15 @@ class VacancyViewSet(viewsets.ModelViewSet):
         username = self.request.query_params.get('username', None)
         if username is not None:
             return UserVacancy.objects.filter(username=username)
+
+    @action(detail=False, methods=['delete'])
+    def delete_all_vacancies_by_username(self, request, username=None):
+        if username is None:
+            return Response({"error": "Username is required"}, status=400)
+
+        UserVacancy.objects.filter(username=username).delete()
+
+        return Response({"message": f"All vacancies for user {username} have been deleted."}, status=200)    
 
 class UserDataViewSet(viewsets.ModelViewSet):
     queryset = UserData.objects.all()
