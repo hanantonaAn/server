@@ -34,6 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class UserData(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    position = models.TextField(null=True, blank=True)
     status = models.TextField(null=True, blank=True)
     additional_info = models.TextField(null=True, blank=True)
     fullname = models.TextField(null=True, blank=True)
