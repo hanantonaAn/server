@@ -21,7 +21,7 @@ def fetch_and_save_vacancies(username):
         text = ""    
     key = SearchWords(text)
     city = userdata.city
-    data = [position, city]
+    data = [position, city, key]
     result = ' '.join(data)
 
     params = {
