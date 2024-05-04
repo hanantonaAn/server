@@ -16,7 +16,6 @@ def fetch_and_save_vacancies(username):
     position = userdata.position
     port = Portfolio.objects.filter(user_id=user.id).first()
     text = port.portfolio_text
-    if text==None: text = ""
     key = SearchWords(text)
     city = userdata.city
     data = [position, city]
