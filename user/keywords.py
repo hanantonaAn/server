@@ -22,7 +22,7 @@ def SearchWords(text):
 
     test_text = ' '.join(filtered_words)
 
-    kw_extractor = yake.KeywordExtractor(top=3, stopwords=None)
+    kw_extractor = yake.KeywordExtractor(top=1, stopwords=None)
 
     keywords = kw_extractor.extract_keywords(test_text)
 

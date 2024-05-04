@@ -62,7 +62,7 @@ def fetch_and_save_vacancies(username):
                         salary_from=str(vacancy['salary']['from']),
                         salary_to=str(vacancy['salary']['to']),
                         address=vacancy['address'],
-                        url=vacancy['url'],
+                        url=vacancy['alternate_url'],
                         company=vacancy['employer']['name'],
                         requirements=vacancy['snippet']['requirement'],
                         responsobility=vacancy['snippet']['responsibility'],
