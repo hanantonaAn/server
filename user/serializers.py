@@ -14,8 +14,11 @@ def fetch_and_save_vacancies(username):
     exp = experience.experience_years
     userdata = UserData.objects.filter(user_id=user.id).first()
     position = userdata.position
-    port = Portfolio.objects.filter(user_id=user.id).first()
-    text = port.portfolio_text
+    if Portfolio.objects.filter(user_id=user.id).exists():
+        port = Portfolio.objects.filter(user_id=user.id).first()
+        text = port.portfolio_text
+    else:
+        text = ""    
     key = SearchWords(text)
     city = userdata.city
     data = [position, city]
