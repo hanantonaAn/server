@@ -24,7 +24,6 @@ class FetchVacanciesView(APIView):
 class VacancyViewSet(viewsets.ModelViewSet):
     queryset = UserVacancy.objects.all()
     serializer_class = VacancySerializer  
-    permission_classes = (IsOwnerOrReadOnly, )
 
     def get_queryset(self):
         username = self.request.query_params.get('username', None)
@@ -39,6 +38,10 @@ class VacancyViewSet(viewsets.ModelViewSet):
         UserVacancy.objects.filter(username=username).delete()
 
         return Response({"message": f"All vacancies for user {username} have been deleted."}, status=200)    
+
+class VacancyBuffViewSet(viewsets.ModelViewSet):
+    queryset = UserVacancy.objects.all()
+    serializer_class = VacancySerializer 
 
 class UserDataViewSet(viewsets.ModelViewSet):
     queryset = UserData.objects.all()
