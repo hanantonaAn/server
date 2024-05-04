@@ -25,10 +25,10 @@ class VacancyViewSet(viewsets.ModelViewSet):
     serializer_class = VacancySerializer  
     permission_classes = (IsOwnerOrReadOnly, )
 
-    # def get_queryset(self):
-    #     username = self.request.query_params.get('username', None)
-    #     if username is not None:
-    #         return UserVacancy.objects.filter(user__username=username)
+    def get_queryset(self):
+        username = self.request.query_params.get('username', None)
+        if username is not None:
+            return UserVacancy.objects.filter(username=username)
 
 class UserDataViewSet(viewsets.ModelViewSet):
     queryset = UserData.objects.all()
