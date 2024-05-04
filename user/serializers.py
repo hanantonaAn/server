@@ -29,6 +29,7 @@ def fetch_and_save_vacancies(username):
     else:
         text = ""    
         key = ""
+    if key == "string": key = ""    
     data = [position, city, key]
     result = ' '.join(data)
     print(result)
