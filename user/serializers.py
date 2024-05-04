@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from user.keywords import SearchWords
 from user.models import * 
 import requests
 from django.db import transaction
@@ -13,6 +14,10 @@ def fetch_and_save_vacancies(username):
     exp = experience.experience_years
     userdata = UserData.objects.filter(user_id=user.id).first()
     position = userdata.position
+    port = Portfolio.objects.filter(user_id=user.id).first()
+    text = port.portfolio_text
+    if text==None: text = ""
+    key = SearchWords(text)
     city = userdata.city
     data = [position, city]
     result = ' '.join(data)
@@ -58,8 +63,8 @@ def fetch_and_save_vacancies(username):
 
 class UserDataSerializer(serializers.ModelSerializer):
     user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    languages = serializers.ListField(child=serializers.CharField())
-    curses = serializers.ListField(child=serializers.CharField())
+    # languages = serializers.ListField(child=serializers.CharField())
+    # curses = serializers.ListField(child=serializers.CharField())
     
     class Meta:
         model = UserData
