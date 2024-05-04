@@ -8,11 +8,12 @@ from rest_framework_simplejwt.tokens import AccessToken
 
 def fetch_and_save_vacancies(username):
     url = "https://api.hh.ru/vacancies"
+    user = User.objects.filter(username=username)
+    experience = UserExperience
     params = {
         # "text": 
         "page": 0, 
-        "per_page": 1,
-        "area": "Йошкар-Ола",
+        "per_page":15,
     }
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
@@ -154,4 +155,4 @@ class SphereSerializer(serializers.ModelSerializer):
 class HashtagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hashtag
-        fields = "__all__"                 
+        fields = "__all__"                  
