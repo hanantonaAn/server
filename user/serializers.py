@@ -10,17 +10,24 @@ from rest_framework_simplejwt.tokens import AccessToken
 def fetch_and_save_vacancies(username):
     url = "https://api.hh.ru/vacancies"
     user = User.objects.filter(username=username).get()
-    experience = UserExperience.objects.filter(user_id=user.id).first()
-    exp = experience.experience_years
-    userdata = UserData.objects.filter(user_id=user.id).first()
-    position = userdata.position
+    if UserExperience.objects.filter(user_id=user.id).exists():
+        experience = UserExperience.objects.filter(user_id=user.id).first()
+        exp = experience.experience_years
+    else:
+        exp = "between1And3" 
+    if  UserData.objects.filter(user_id=user.id).exists():       
+        userdata = UserData.objects.filter(user_id=user.id).first()
+        position = userdata.position
+        city = userdata.city
+    else:
+        position = "Разработчик" 
+        city = "Москва"   
     if Portfolio.objects.filter(user_id=user.id).exists():
         port = Portfolio.objects.filter(user_id=user.id).first()
         text = port.portfolio_text
     else:
         text = ""    
     key = SearchWords(text)
-    city = userdata.city
     data = [position, city, key]
     result = ' '.join(data)
 
