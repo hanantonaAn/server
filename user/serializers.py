@@ -75,7 +75,7 @@ class DataSerializer(serializers.ModelSerializer):
 class UsersExpSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserExperience
-        fields = ['id', 'experience_years', 'position', 'company', 'experience_info', 'time_create', 'time_update']
+        fields = "__all__" 
 
 class UsersPortSerializer(serializers.ModelSerializer):
     class Meta:
