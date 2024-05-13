@@ -6,6 +6,7 @@ from user.models import *
 from user.permissions import *
 from user.serializers import *
 from rest_framework.decorators import action
+from rest_framework.decorators import api_view
 
 class FetchVacanciesView(APIView):
     def get(self, request):
@@ -214,14 +215,14 @@ class AllPortfolioViewSet(viewsets.ModelViewSet):
         text = TextField.objects.filter(portfolio_id=port.id).all()
         photo = Photo.objects.filter(portfolio_id=port.id).all()
         slider = Slider.objects.filter(portfolio_id=port.id).all()
-        # slider_image = SliderImage.objects.filter(slider_id=slider.id).all()
-
+        user_exp = UserExperience.objects.filter(user_id=user.id).all()
+        
+        user_exp_serializer = UsersExpSerializer(user_exp, many=True) if user_exp else None
         user_serializer = UsersSerializer(user)
         port_serializer = PortfolioSerializer(port) if port else None
         text_serializer = TextFieldSerializer(text, many=True) if text else None
         photo_serializer = PhotoSerializer(photo, many=True) if photo else None
         slider_serializer = SliderSerializer(slider, many=True) if slider else None
-        # slider_image_serializer = SliderImageSerializer(slider_image,  many=True) if slider_image else None
         
 
         data = {
@@ -230,7 +231,7 @@ class AllPortfolioViewSet(viewsets.ModelViewSet):
             'text': text_serializer.data if text_serializer else None,
             'photo': photo_serializer.data if photo_serializer else None,
             'slider': slider_serializer.data if slider_serializer else None,
-            # 'slider_image': slider_image_serializer.data if slider_image_serializer else None,
+            'user_experience': user_exp_serializer.data if user_exp_serializer else None,
         }
 
         return Response(data)
@@ -262,4 +263,9 @@ class HashtagViewSet(viewsets.ModelViewSet):
     queryset = Hashtag.objects.all()
     serializer_class = HashtagSerializer    
     
+@api_view(['GET'])
+def user_list_chat(request, ):
+    users = User.objects.all().order_by('username')
+    serializer = UserSerializerChat(instance=users, many=True)
+    return Response(serializer.data)   
    

@@ -18,13 +18,17 @@ router.register(r'userexperience', UserExperienceViewSet)
 
 router.register(r'portfolio', PortfolioViewSet)
 router.register(r'textfield', TextFieldViewSet)
-router.register(r'link', LinkViewSet)
-router.register(r'list', ListViewSet)
+
+# router.register(r'link', LinkViewSet)
+# router.register(r'list', ListViewSet)
+
 router.register(r'photo', PhotoViewSet)
 router.register(r'slider', SliderViewSet)
 router.register(r'sphere', SphereViewSet)
-router.register(r'hashtag', HashtagViewSet)
-router.register(r'heading', HeadingViewSet)
+
+# router.register(r'hashtag', HashtagViewSet)
+# router.register(r'heading', HeadingViewSet)
+
 router.register(r'vacancy', VacancyViewSet)
 router.register(r'vacancy-buff', VacancyBuffViewSet)
 router.register(r'slider-images', SliderImageViewSet)
@@ -36,6 +40,7 @@ router.register(r'userexperiencebyuser', UserExperienceByUserIdViewSet, basename
 
 urlpatterns = [ 
     path("admin/", admin.site.urls),
+    path('chat/', include('portfolio.urls')),
     path('fetch_vacancies/', FetchVacanciesView.as_view(), name='fetch-vacancies'),
     path('', include(router.urls)),
     path('images_by_slider/', GetImagesBySliderRequest.as_view(), name='slider-images'),

@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-pyoxeh5a^br435a4i-_)jgzs_zp76!1ewc+)(xz%72f09u&hg#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -49,6 +49,10 @@ INSTALLED_APPS = [
     'yake',
     'inspect',
     'collections',
+
+    # chat api
+    'channels',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -59,7 +63,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'server.urls'
 
@@ -86,22 +93,22 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'diplom1',
-    #     'USER': 'postgres',
-    #     'PASSWORD': '123', 
-    #     'HOST': 'localhost',
-    #     'PORT': 5432,
-    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'diplom1',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db', 
+        'PASSWORD': '123', 
+        'HOST': 'localhost',
         'PORT': 5432,
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'postgres',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'postgres',
+    #     'HOST': 'db', 
+    #     'PORT': 5432,
+    # }
 }
 
 
@@ -190,3 +197,9 @@ EMAIL_HOST_USER = 'hanantona12345@yandex.ru'
 EMAIL_HOST_PASSWORD = 'ecgfbbmvncxwhkau'
 EMAIL_USE_SSL = True
 # DEFAULT_FROM_EMAIL = 'django-auth@kantegory.me'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}

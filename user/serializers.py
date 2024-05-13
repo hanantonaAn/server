@@ -87,6 +87,11 @@ class UsersSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email']   
 
+class UserSerializerChat(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username']
+
 class UsersSkillsSerializer(serializers.ModelSerializer):
     skills = serializers.ListField(child=serializers.CharField())
     class Meta:
