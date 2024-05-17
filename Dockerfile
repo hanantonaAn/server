@@ -15,4 +15,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD python manage.py makemigrations && python manage.py migrate && python -m uvicorn server.asgi:application
+CMD python manage.py makemigrations && python manage.py migrate && python -m uvicorn server.asgi:application --host 0.0.0.0 --port 8000

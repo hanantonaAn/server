@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.shortcuts import redirect, reverse
 
 
-# Create your views here.
 @api_view(['POST'])
 def start_convo(request, ):
     data = request.data
