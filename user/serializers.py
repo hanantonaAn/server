@@ -6,7 +6,6 @@ from django.db import transaction
 from .models import UserVacancy
 from rest_framework_simplejwt.tokens import AccessToken
 
-
 def fetch_and_save_vacancies(username):
     url = "https://api.hh.ru/vacancies"
     user = User.objects.filter(username=username).get()
@@ -99,12 +98,15 @@ class UsersSkillsSerializer(serializers.ModelSerializer):
         fields = "__all__" 
 
 class DataSerializer(serializers.ModelSerializer):
-    languages = serializers.ListField(child=serializers.CharField())
-    curses = serializers.ListField(child=serializers.CharField())
 
     class Meta:
         model = UserData
         fields = "__all__"         
+
+class UserDataChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserData
+        fields = ['fullname', 'surname', 'picture', 'status']
 
 class UsersExpSerializer(serializers.ModelSerializer):
     class Meta:

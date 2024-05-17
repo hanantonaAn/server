@@ -2,8 +2,8 @@ from django.shortcuts import render
 from .models import Conversation
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from user.models import User as User
-from .serializers import ConversationListSerializer, ConversationSerializer
+from user.models import User
+from .serializers import *
 from django.db.models import Q
 from django.shortcuts import redirect, reverse
 
@@ -32,7 +32,7 @@ def get_conversation(request, convo_id):
     if not conversation.exists():
         return Response({'message': 'Conversation does not exist'})
     else:
-        serializer = ConversationSerializer(instance=conversation[0])
+        serializer = ConversationSerializer1(instance=conversation[0])
         return Response(serializer.data)
 
 
@@ -40,5 +40,5 @@ def get_conversation(request, convo_id):
 def conversations(request):
     conversation_list = Conversation.objects.filter(Q(initiator=request.user) |
                                                     Q(receiver=request.user))
-    serializer = ConversationListSerializer(instance=conversation_list, many=True)
+    serializer = ConversationListSerializer1(instance=conversation_list, many=True)
     return Response(serializer.data)
