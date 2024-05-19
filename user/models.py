@@ -173,6 +173,10 @@ class Portfolio(models.Model):
     hashtag_ids = models.ManyToManyField('user.Hashtag', related_name='porfolio_hashtags', null=True, blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
+    coordinate_x = models.FloatField(null=True, blank=True)
+    coordinate_y = models.FloatField(null=True, blank=True)
+    height = models.IntegerField(null=True, blank=True)
+    width = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return str(self.user_id)
